@@ -3,7 +3,7 @@
 import 'package:app_captusiat/features/alerting/alerting_page.dart';
 import 'package:app_captusiat/features/auth/presentation/pages/login_page.dart';
 import 'package:app_captusiat/features/splash/presentation/pages/splash_page.dart';
-import 'package:app_captusiat/features/turnos/presentation/pages/turno_page.dart';
+import 'package:app_captusiat/features/turnos/presentation/pages/dashboard_page.dart';
 import 'package:get/get.dart';
 
 part 'app_routes.dart';
@@ -28,7 +28,7 @@ class AppPages {
     // TURNO
     GetPage(
       name: AppRoutes.TURNO,
-      page: () => TurnoPage(),
+      page: () => DashboardPage(),
     ),
 
     // ALERTING

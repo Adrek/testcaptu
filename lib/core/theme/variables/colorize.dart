@@ -8,7 +8,7 @@ class Colorize {
   Colorize._internal();
 
   // Bodytext
-  Color get defaultSurface => const Color(0xFF0C111D);
+  Color get defaultSurface => const Color(0xFFf3f5f7);
 
   // Bodytext
   Color get bodyText => const Color(0xFF1F222E);

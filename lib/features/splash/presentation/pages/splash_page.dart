@@ -23,7 +23,7 @@ class SplashPage extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: width * .2),
+            padding: EdgeInsets.symmetric(horizontal: Content.padding * .3),
             width: double.infinity,
             color: Colorize().primaryFill,
             child: const Column(
