@@ -1,0 +1,52 @@
+/* import 'package:app_captusiat/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:app_captusiat/features/location/domain/usecases/get_location_updates_usecase.dart';
+import 'package:app_captusiat/features/location/domain/usecases/get_location_usecase.dart';
+import 'package:app_captusiat/features/location/domain/usecases/request_location_permission_usecase.dart';
+import 'package:app_captusiat/features/location/presentation/controllers/location_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class HomePage extends StatelessWidget {
+  final authController = Get.find<AuthController>();
+  final locationController = Get.put(
+    LocationController(
+      requestPermissionUseCase: Get.find<RequestLocationPermissionUseCase>(),
+      getLocationUseCase: Get.find<GetLocationUseCase>(),
+      getLocationUpdatesUseCase: Get.find<GetLocationUpdatesUseCase>(),
+    ),
+  );
+
+  HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Home")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                locationController.requestLocationPermission();
+              },
+              child: const Text("Request Location"),
+            ),
+            Obx(() => Text(locationController.currentLocation.value)),
+            Obx(() => Text(
+                  locationController.locationError.value,
+                  style: const TextStyle(color: Colors.red),
+                )),
+            ElevatedButton(
+              onPressed: () {
+                authController.logout();
+              },
+              child: const Text("Logout"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+ */

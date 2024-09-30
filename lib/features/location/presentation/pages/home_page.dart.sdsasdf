@@ -1,0 +1,68 @@
+import 'dart:isolate';
+import 'dart:ui';
+
+import 'package:background_locator_2/background_locator.dart';
+import 'package:background_locator_2/location_dto.dart';
+import 'package:flutter/material.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  static const String _isolateName = "LocatorIsolate";
+  ReceivePort port = ReceivePort();
+
+  @override
+  void initState() {
+    super.initState();
+
+    IsolateNameServer.registerPortWithName(port.sendPort, _isolateName);
+    port.listen((dynamic data) {
+      // do something with data
+    });
+    initPlatformState();
+  }
+
+  Future<void> initPlatformState() async {
+    await BackgroundLocator.initialize();
+  }
+
+  void checkLocationService() async {
+    final _isRunning = await BackgroundLocator.isServiceRunning();
+    debugPrint('${_isRunning}');
+  }
+
+  /* void startLocationService() async {
+    await BackgroundLocator.initialize();
+    await BackgroundLocator.registerLocationUpdate(
+      _locationCallback,
+      androidSettings: AndroidSettings(
+        accuracy: LocationAccuracy.NAVIGATION,
+        distanceFilter: 10, // Cambio de distancia en metros
+        interval: 60, // C
+      ),
+    );
+  } */
+
+  void _locationCallback(LocationDto locationDto) {
+    // Envía la ubicación al servidor cuando esté en segundo plano
+    print('Nueva ubicación ${locationDto.latitude} - ${locationDto.longitude}');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: ElevatedButton(
+            onPressed: () {
+              checkLocationService();
+            },
+            child: Text('Iniciar')),
+      ),
+    );
+  }
+}
