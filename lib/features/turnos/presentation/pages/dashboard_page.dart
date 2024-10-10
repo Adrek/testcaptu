@@ -72,7 +72,7 @@ class _Body extends StatelessWidget {
         Expanded(
           child: Container(
             margin: const EdgeInsets.only(top: 80.0),
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: Content.padding,
             ),
             child: Column(
@@ -96,7 +96,7 @@ class _Body extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(width: Content.padding * .7),
+                    const SizedBox(width: Content.padding * .7),
                     Expanded(
                       child: FadeInRight(
                         delay: const Duration(milliseconds: 300),
@@ -179,7 +179,7 @@ class _Header extends StatelessWidget {
                           child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Text(
+                          const Text(
                             'Buen día,\nAlec González',
                             style: TextStyle(
                               color: Colors.white,
@@ -187,7 +187,7 @@ class _Header extends StatelessWidget {
                               fontSize: 20.0,
                             ),
                           ),
-                          SizedBox(height: 10.0),
+                          const SizedBox(height: 10.0),
                           Text(
                             'LUNES 12 DE JUNIO',
                             style: TextStyle(
@@ -198,7 +198,7 @@ class _Header extends StatelessWidget {
                           ),
                         ],
                       )),
-                      BrandName(
+                      const BrandName(
                         textSize: 18.0,
                       ),
                     ],
@@ -256,7 +256,7 @@ class _KpiCard extends StatelessWidget {
           highlightColor: Colors.black.withOpacity(.035),
           splashColor: Colors.black.withOpacity(.045),
           onTap: () {
-            print('asd');
+            debugPrint('asd');
           },
           child: Container(
             padding: const EdgeInsets.symmetric(
@@ -418,7 +418,7 @@ class _CardConsultaPlacas extends StatelessWidget {
                                   Flexible(
                                     child: FilledButton(
                                       style: ButtonStyle(
-                                        padding: WidgetStatePropertyAll(
+                                        padding: const WidgetStatePropertyAll(
                                           EdgeInsets.symmetric(
                                             vertical: 0.0,
                                             horizontal: 20.0,
@@ -482,7 +482,7 @@ class _NavigationBar extends StatelessWidget {
     // final width = MediaQuery.of(context).size.width;
 
     return Container(
-      margin: EdgeInsets.symmetric(
+      margin: const EdgeInsets.symmetric(
         vertical: 40.0,
         horizontal: Content.padding - 5,
       ),

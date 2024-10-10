@@ -16,13 +16,12 @@ class SplashPage extends StatelessWidget {
       () => authController.handleSession(),
     );
 
-    final width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: Colorize().primaryFill,
       body: Stack(
         children: [
           Container(
+            // ignore: prefer_const_constructors
             padding: EdgeInsets.symmetric(horizontal: Content.padding * .3),
             width: double.infinity,
             color: Colorize().primaryFill,

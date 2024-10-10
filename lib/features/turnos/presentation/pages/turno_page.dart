@@ -62,7 +62,6 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final width = MediaQuery.of(context).size.width;
 
     return Stack(
@@ -85,7 +84,7 @@ class _Body extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          BrandName(
+                          const BrandName(
                             textSize: 20.0,
                           ),
                           const SizedBox(height: 8.0),
@@ -105,7 +104,7 @@ class _Body extends StatelessWidget {
                         onPressed: () {
                           controller.logout();
                         },
-                        child: Text('Salir'),
+                        child: const Text('Salir'),
                       ),
                     )
                   ],
@@ -167,7 +166,7 @@ class TurnoInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.greenAccent.withOpacity(.86),
         borderRadius: BorderRadius.circular(
@@ -193,7 +192,7 @@ class _LaunchTurnoButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onTap,
       style: ButtonStyle(
-        backgroundColor: MaterialStatePropertyAll(
+        backgroundColor: WidgetStatePropertyAll(
           isStart ? Colors.greenAccent : Colors.redAccent,
         ),
       ),

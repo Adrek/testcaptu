@@ -18,7 +18,7 @@ class AppPages {
     // LOGIN
     GetPage(
       name: AppRoutes.LOGIN,
-      page: () => LoginPage(),
+      page: () => const LoginPage(),
     ),
     // HOME
     // GetPage(

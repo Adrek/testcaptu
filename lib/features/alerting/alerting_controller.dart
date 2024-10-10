@@ -60,7 +60,7 @@ class HomeAlertingController extends GetxController
     _toggleSOSLottie();
 
     _timerSosTxt?.cancel();
-    _timerSosTxt = Timer.periodic(Duration(milliseconds: 2000), (_) {
+    _timerSosTxt = Timer.periodic(const Duration(milliseconds: 2000), (_) {
       _toggleSOSLottie();
     });
   }

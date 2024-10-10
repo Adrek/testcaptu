@@ -54,7 +54,7 @@ class AppBarBase extends StatelessWidget {
             ),
             Container(
               width: double.infinity,
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: Content.padding,
                 vertical: 0.0,
               ),
@@ -102,7 +102,7 @@ class AppBarBase extends StatelessWidget {
                         ),
                       ),
                     child,
-                    SizedBox(height: Content.padding * 1),
+                    const SizedBox(height: Content.padding * 1),
                   ],
                 ),
               ),

@@ -1,0 +1,1 @@
+adb reverse --remove-all

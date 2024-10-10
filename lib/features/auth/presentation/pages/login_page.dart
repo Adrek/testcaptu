@@ -69,11 +69,11 @@ class _LoginPageState extends State<LoginPage> {
                         width: double.infinity,
                         child: FilledButton(
                           style: ButtonStyle(
-                            padding: const MaterialStatePropertyAll(
+                            padding: const WidgetStatePropertyAll(
                                 EdgeInsets.symmetric(
                               vertical: 15.0,
                             )),
-                            backgroundColor: MaterialStatePropertyAll(
+                            backgroundColor: WidgetStatePropertyAll(
                               Colorize().accentFill,
                             ),
                           ),

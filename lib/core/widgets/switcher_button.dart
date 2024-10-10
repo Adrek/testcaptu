@@ -10,7 +10,6 @@ class SwitcherButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(15.0);
     final textTheme = Theme.of(context).textTheme;
-    final circleSize = MediaQuery.of(context).size.width;
 
     return GestureDetector(
       onTap: onTap,
@@ -23,8 +22,8 @@ class SwitcherButton extends StatelessWidget {
         child: Row(
           children: [
             esUnido
-                ? SizedBox()
-                : _ButtonIcon(
+                ? const SizedBox()
+                : const _ButtonIcon(
                     iconPath: 'assets/icons/switcher_arrow.svg',
                   ),
             Expanded(
@@ -45,7 +44,7 @@ class SwitcherButton extends StatelessWidget {
                     iconPath: 'assets/icons/switcher_check.svg',
                     esUnido: esUnido,
                   )
-                : SizedBox(),
+                : const SizedBox(),
           ],
         ),
       ),
@@ -59,7 +58,6 @@ class _ButtonIcon extends StatelessWidget {
   final String? iconPath;
 
   const _ButtonIcon({
-    super.key,
     this.iconPath,
     this.esUnido = false,
   });
@@ -77,7 +75,7 @@ class _ButtonIcon extends StatelessWidget {
             color: esUnido ? Colors.white : Colorize().accentFill,
             borderRadius: BorderRadius.circular(12),
           ),
-          child: SizedBox(),
+          child: const SizedBox(),
         ),
         Positioned.fill(
             child: Center(
@@ -89,7 +87,7 @@ class _ButtonIcon extends StatelessWidget {
                     BlendMode.srcIn,
                   ),
                 )
-              : SizedBox(),
+              : const SizedBox(),
         ))
       ],
     );

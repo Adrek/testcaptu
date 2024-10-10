@@ -11,10 +11,10 @@ final akSOSColor = Colorize().primaryFill;
 class AlertingPage extends StatelessWidget {
   final _conX = Get.put(HomeAlertingController());
 
+  AlertingPage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    const akContentPadding = 20.0;
-
     return Scaffold(
       body: Stack(
         children: [
@@ -62,7 +62,7 @@ class AlertingPage extends StatelessWidget {
                         Positioned.fill(
                           child: Obx(
                             () => AnimatedSwitcher(
-                                duration: Duration(milliseconds: 300),
+                                duration: const Duration(milliseconds: 300),
                                 child: _conX.showAlertLottie.value
                                     ? Container(
                                         padding:
@@ -95,7 +95,7 @@ class AlertingPage extends StatelessWidget {
                                               )),
                                         ),
                                       )
-                                    : SizedBox()),
+                                    : const SizedBox()),
                           ),
                         ),
                       ],
@@ -105,7 +105,7 @@ class AlertingPage extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: FadeInUp(
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     child: _MainText(conX: _conX),
                   ),
                 ),
@@ -121,9 +121,8 @@ class AlertingPage extends StatelessWidget {
 class _CircleRadarOutlined extends AnimatedWidget {
   final double size;
 
-  _CircleRadarOutlined(Animation<double> animation,
-      {Key? key, this.size = 200.0})
-      : super(listenable: animation, key: key);
+  const _CircleRadarOutlined(Animation<double> animation, {this.size = 200.0})
+      : super(listenable: animation);
 
   double get value => (listenable as Animation).value;
 
@@ -154,7 +153,7 @@ class _CircleRadarOutlined extends AnimatedWidget {
 class _MainText extends StatelessWidget {
   final HomeAlertingController conX;
 
-  const _MainText({Key? key, required this.conX}) : super(key: key);
+  const _MainText({required this.conX});
 
   @override
   Widget build(BuildContext context) {
@@ -162,18 +161,18 @@ class _MainText extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Obx(() => AnimatedSwitcher(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               child: Text(
                 conX.mainMessage.value,
                 key: ValueKey('vkSosMsg_${conX.mainMessage.value}'),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12.0 + 5.0,
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             )),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         Text(
           'No cierre la aplicación',
           style: TextStyle(
