@@ -22,7 +22,7 @@ class SplashPage extends StatelessWidget {
         children: [
           Container(
             // ignore: prefer_const_constructors
-            padding: EdgeInsets.symmetric(horizontal: Content.padding * .3),
+            padding: EdgeInsets.symmetric(horizontal: Content.padding * 2),
             width: double.infinity,
             color: Colorize().primaryFill,
             child: const Column(

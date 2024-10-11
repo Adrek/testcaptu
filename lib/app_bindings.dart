@@ -25,9 +25,10 @@ class AppBindings extends Bindings {
   @override
   void dependencies() {
     // Core services
-    final dio = Get.put(Dio());
+    final dio = Get.put(Dio(BaseOptions()));
     Get.put(LocalStorageService());
     final networkService = Get.put(SupabaseApiService(dio));
+    // final networkService = Get.put(ApiRestService(dio));
 
     // Auth dependencies
     Get.put(AuthLocalDataSource(Get.find<LocalStorageService>()));

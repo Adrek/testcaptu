@@ -10,7 +10,7 @@ class BrandSlogan extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Text(
-      'Aplicación para geolocalización de personal',
+      'Aplicación para la búsqueda de vehículos con orden de captura',
       textAlign: TextAlign.center,
       style: textTheme.bodyMedium
           ?.copyWith(color: Colors.white, fontSize: textSize),
