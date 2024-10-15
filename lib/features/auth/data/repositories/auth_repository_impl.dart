@@ -1,13 +1,13 @@
 import 'package:app_captusiat/core/error/failure.dart';
 import 'package:app_captusiat/features/auth/data/datasources/auth_local_data_source.dart';
-import 'package:app_captusiat/features/auth/data/datasources/auth_remote_data_source_supabase.dart';
+import 'package:app_captusiat/features/auth/data/datasources/auth_remote_data_source_ws.dart';
 import 'package:app_captusiat/features/auth/domain/entities/user_credentials.dart';
 import 'package:app_captusiat/features/auth/domain/repositories/auth_repository.dart';
 import 'package:dartz/dartz.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final AuthLocalDataSource localDataSource;
-  final AuthRemoteDataSourceSupabase remoteDataSource;
+  final AuthRemoteDataSourceWS remoteDataSource;
 
   AuthRepositoryImpl(
       {required this.localDataSource, required this.remoteDataSource});

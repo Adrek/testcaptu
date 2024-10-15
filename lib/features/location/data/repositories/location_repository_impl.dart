@@ -55,8 +55,10 @@ class LocationRepositoryImpl implements LocationRepository {
     try {
       // Escucha cambios en la ubicación
       await for (final position in Geolocator.getPositionStream(
-        locationSettings:
-            const LocationSettings(accuracy: LocationAccuracy.high),
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+          distanceFilter: 10,
+        ),
       )) {
         debugPrint('llegando posición');
         yield Right(position);

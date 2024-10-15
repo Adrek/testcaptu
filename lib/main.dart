@@ -2,10 +2,15 @@ import 'package:app_captusiat/app_bindings.dart';
 import 'package:app_captusiat/core/routes/app_pages.dart';
 import 'package:app_captusiat/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 void main() {
   runApp(const MainApp());
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    systemNavigationBarColor: Colorize().primaryFill,
+    systemNavigationBarIconBrightness: Brightness.light,
+  ));
 }
 
 class MainApp extends StatelessWidget {

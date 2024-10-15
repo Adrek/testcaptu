@@ -64,13 +64,15 @@ class TurnoPageController extends GetxController {
           isFinalizarButtonVisible(true);
           isIniciarButtonVisible(false);
 
-          startLocationListener();
+          // TODO: DESCOMENTAR
+          // startLocationListener();
         } else {
           turnoActivo.value = null;
           isIniciarButtonVisible(true);
           isFinalizarButtonVisible(false);
 
           // Detenemos la escucha de la posición
+          // TODO: DESCOMENTAR
           stopLocationListener();
         }
       },

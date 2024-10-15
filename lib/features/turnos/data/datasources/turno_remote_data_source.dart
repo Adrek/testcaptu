@@ -1,8 +1,7 @@
 import 'package:app_captusiat/core/services/network_service.dart';
 import 'package:app_captusiat/features/turnos/data/mappers/turno_mapper.dart';
-import 'package:app_captusiat/features/turnos/data/models/turno_supabase_model.dart';
+import 'package:app_captusiat/features/turnos/data/models/turno_api_model.dart';
 import 'package:app_captusiat/features/turnos/domain/entities/turno.dart';
-import 'package:get/get.dart';
 
 class TurnoRemoteDataSource {
   final NetworkService networkService;
@@ -11,70 +10,40 @@ class TurnoRemoteDataSource {
 
   Future<Turno?> getTurnoAbiertoHoy(int userId) async {
     try {
-      final response = await networkService.get(
-        '/turnos',
-        queryParameters: {
-          "select": "*",
-          "user_id": "eq.$userId",
-          "order": "id.desc",
-        },
-      );
+      final response = await networkService.get('/ListaTurno/1');
 
-      final turnos = List<TurnoSupabaseModel>.from(
-          response.data.map((e) => TurnoSupabaseModel.fromJson(e)));
+      final turnos = List<TurnoApiModel>.from(
+          response.data.map((e) => TurnoApiModel.fromJson(e)));
 
-      final today = DateTime.now();
-
-      // Obtiene el último turno registrado en el día
-      final lastTurno = turnos.firstWhereOrNull((e) {
-        DateTime createdAtLocal = e.createdAt.toLocal();
-        return createdAtLocal.year == today.year &&
-            createdAtLocal.month == today.month &&
-            createdAtLocal.day == today.day;
-      });
-
-      // Si no hay ningún turno registrado, envía null para crear uno nuevo.
-      if (lastTurno == null) return null;
-
-      // Si encontró turno, pero endTime está completo es porque ya cerró ese turno
-      // así que envía null para crear uno nuevo.
-      if (lastTurno.endTime != null) return null;
-
-      // Sino, devuelve el turno, lo pone en memoria para cerrarlo más tarde
-      return TurnoMapper.fromTurnoSupabaseModel(lastTurno);
+      if (turnos.isEmpty) {
+        return null;
+      } else {
+        return TurnoMapper.fromTurnoApiModel(turnos.first);
+      }
     } catch (e) {
-      throw Exception();
+      throw Exception(e);
     }
   }
 
   Future<void> iniciarTurno(int userId) async {
     try {
       await networkService.post(
-        '/turnos',
+        '/turno',
         data: {
-          "user_id": userId,
+          "psitipo": 1, // TODO: Para qué es?
+          "pbiuser_id": 1 // TODO: Se debe extraer del token
         },
       );
     } catch (e) {
-      throw Exception();
+      throw Exception(e);
     }
   }
 
   Future<void> finalizarTurno(int turnoId) async {
-    final now = DateTime.now().toUtc().toIso8601String();
-
     try {
-      await networkService.patch(
-        '/turnos',
-        queryParameters: {
-          "id": "eq.$turnoId",
-        },
-        data: {
-          "end_time": now,
-        },
-      );
+      await networkService.post('/turno/$turnoId/cerrar');
     } catch (e) {
-      throw Exception();
+      throw Exception(e);
     }
   }
 }

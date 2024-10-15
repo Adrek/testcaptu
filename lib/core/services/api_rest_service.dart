@@ -6,9 +6,9 @@ class ApiRestService extends NetworkService {
   final Dio dio;
 
   ApiRestService(this.dio) {
-    dio.options.baseUrl = 'http://172.29.170.120:8080/api/v1/captudep';
+    dio.options.baseUrl = 'http://localhost:8080/api/v1/captudep';
     dio.options.headers = {};
-    // dio.interceptors.add(LogInterceptor(responseBody: true));
+    dio.interceptors.add(LogInterceptor(responseBody: true));
   }
 
   @override
@@ -32,29 +32,3 @@ class ApiRestService extends NetworkService {
     );
   }
 }
-
-/*
-// Función que convierte un request en formato curl
-void printCurlRequest(RequestOptions options) {
-  final method = options.method.toUpperCase();
-  final headers =
-      options.headers.map((key, value) => MapEntry(key, value.toString()));
-  final data = options.data != null ? options.data.toString() : '';
-
-  final curlCommand =
-      StringBuffer('curl -X $method \'${options.uri.toString()}\'');
-
-  // Agregar headers al comando curl
-  headers.forEach((key, value) {
-    curlCommand.write(' -H "$key: $value"');
-  });
-
-  // Agregar data si existe
-  if (data.isNotEmpty) {
-    curlCommand.write(' --data \'$data\'');
-  }
-
-  // Imprimir el comando curl en la consola
-  debugPrint('CURL Format: ${curlCommand.toString()}');
-}
- */

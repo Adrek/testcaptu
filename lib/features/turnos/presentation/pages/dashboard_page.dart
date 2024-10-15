@@ -34,7 +34,7 @@ class DashboardPage extends StatelessWidget {
     const inDuration = Duration(milliseconds: 400);
 
     return Scaffold(
-      backgroundColor: Colorize().defaultSurface,
+      backgroundColor: Colorize().accentFill,
       body: _Body(
         controller: controller,
         height: height,
@@ -70,75 +70,77 @@ class _Body extends StatelessWidget {
       children: [
         _Header(width: width, inDuration: inDuration),
         Expanded(
-          child: Container(
-            margin: const EdgeInsets.only(top: 80.0),
-            padding: const EdgeInsets.symmetric(
-              horizontal: Content.padding,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: FadeInLeft(
-                        delay: const Duration(milliseconds: 100),
-                        duration: inDuration,
-                        child: _KpiCard(
-                          title: 'Capturas',
-                          subTitle: 'Realizadas del día',
-                          numberValue: 0,
-                          footer: 'placas vehiculares',
-                          prefixIcon: SvgPicture.asset(
-                            'assets/icons/line_chart.svg',
+          child: SingleChildScrollView(
+            child: Container(
+              margin: const EdgeInsets.only(top: 80.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: Content.padding,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FadeInLeft(
+                          delay: const Duration(milliseconds: 100),
+                          duration: inDuration,
+                          child: _KpiCard(
+                            title: 'Capturas',
+                            subTitle: 'Realizadas del día',
+                            numberValue: 0,
+                            footer: 'placas vehiculares',
+                            prefixIcon: SvgPicture.asset(
+                              'assets/icons/line_chart.svg',
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: Content.padding * .7),
-                    Expanded(
-                      child: FadeInRight(
-                        delay: const Duration(milliseconds: 300),
-                        duration: inDuration,
-                        child: const _KpiCard(
-                          title: 'Plaqueos',
-                          subTitle: 'Totales registrados',
-                          numberValue: 0,
-                          footer: 'actualizado',
+                      const SizedBox(width: Content.padding * .7),
+                      Expanded(
+                        child: FadeInRight(
+                          delay: const Duration(milliseconds: 300),
+                          duration: inDuration,
+                          child: const _KpiCard(
+                            title: 'Plaqueos',
+                            subTitle: 'Totales registrados',
+                            numberValue: 0,
+                            footer: 'actualizado',
+                          ),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: Spacing.sm * .3,
-                ),
-                Obx(
-                  () => controller.isIniciarButtonVisible.value
-                      ? SwitcherButton(
-                          onTap: () {
-                            controller.iniciarTurno();
-                          },
-                        )
-                      : const SizedBox(),
-                ),
-                Obx(
-                  () => controller.isFinalizarButtonVisible.value
-                      ? SwitcherButton(
-                          esUnido: true,
-                          onTap: () {
-                            controller.finalizarTurno();
-                          },
-                        )
-                      : const SizedBox(),
-                ),
-                FadeInUp(
-                  delay: const Duration(milliseconds: 400),
-                  duration: inDuration,
-                  child: const _CardConsultaPlacas(),
-                ),
-              ],
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: Spacing.sm * .3,
+                  ),
+                  Obx(
+                    () => controller.isIniciarButtonVisible.value
+                        ? SwitcherButton(
+                            onTap: () {
+                              controller.iniciarTurno();
+                            },
+                          )
+                        : const SizedBox(),
+                  ),
+                  Obx(
+                    () => controller.isFinalizarButtonVisible.value
+                        ? SwitcherButton(
+                            esUnido: true,
+                            onTap: () {
+                              controller.finalizarTurno();
+                            },
+                          )
+                        : const SizedBox(),
+                  ),
+                  FadeInUp(
+                    delay: const Duration(milliseconds: 400),
+                    duration: inDuration,
+                    child: const _CardConsultaPlacas(),
+                  ),
+                ],
+              ),
             ),
           ),
         )
@@ -482,6 +484,21 @@ class _NavigationBar extends StatelessWidget {
     // final width = MediaQuery.of(context).size.width;
 
     return Container(
+      decoration: BoxDecoration(
+        color: Colors.red,
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(30),
+        ),
+      ),
+      child: Row(
+        children: [
+          _OptionItem(),
+          _OptionItem(),
+        ],
+      ),
+    );
+
+    return Container(
       margin: const EdgeInsets.symmetric(
         vertical: 40.0,
         horizontal: Content.padding - 5,
@@ -533,6 +550,20 @@ class _NavigationBar extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _OptionItem extends StatelessWidget {
+  const _OptionItem({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [Text('Inicio')],
     );
   }
 }
