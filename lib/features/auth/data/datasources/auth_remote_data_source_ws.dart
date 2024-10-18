@@ -9,26 +9,26 @@ class AuthRemoteDataSourceWS {
 
   Future<UserCredentials?> login(String username, String password) async {
     try {
-      await _networkService.dio.get('/ListadoCanal/2');
+      final resp = await _networkService.dio.post(
+        '/login',
+        data: {
+          "usuario": username,
+          "contrasena": password,
+        },
+      );
 
-      /* final users = List<UserSupabaseModel>.from(
-          response.data.map((x) => UserSupabaseModel.fromJson(x)));
+      final data = resp.data;
 
-      final user = users.firstWhereOrNull(
-          (e) => e.username == username && e.password == password);
-
-      if (user != null) {
-        return UserMapper.fromUserSupbaseModel(user);
+      if (resp.data['token'] != null) {
+        return UserCredentials(
+          id: data['icodUsu'],
+          username: username,
+          token: data['token']['access_token'],
+          refreshToken: data['token']['refresh_token'],
+        );
       } else {
         return null;
-      } */
-
-      return UserCredentials(
-        id: 1,
-        username: 'agonzalez',
-        token: 'eA34sk234dsklSDdskl3dsf',
-        refreshToken: 'eA34sk23',
-      );
+      }
     } catch (e) {
       throw ServerException();
     }

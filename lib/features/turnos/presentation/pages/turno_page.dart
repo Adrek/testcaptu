@@ -1,6 +1,5 @@
 import 'package:app_captusiat/core/theme/app_theme.dart';
 import 'package:app_captusiat/core/widgets/widgets.dart';
-import 'package:app_captusiat/features/alerting/alerting_page.dart';
 import 'package:app_captusiat/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:app_captusiat/features/location/domain/usecases/get_location_updates_usecase.dart';
 import 'package:app_captusiat/features/location/domain/usecases/request_location_permission_usecase.dart';
@@ -66,9 +65,9 @@ class _Body extends StatelessWidget {
 
     return Stack(
       children: [
-        Obx(() => controller.isFinalizarButtonVisible.value
+        /* Obx(() => controller.isFinalizarButtonVisible.value
             ? AlertingPage()
-            : const SizedBox()),
+            : const SizedBox()), */
         SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(
@@ -125,7 +124,7 @@ class _Body extends StatelessWidget {
                           ? TurnoInfo(turno: controller.turnoActivo.value!)
                           : const SizedBox()),
                       const SizedBox(height: 10.0), */
-                      Obx(
+                      /*  Obx(
                         () => controller.isIniciarButtonVisible.value
                             ? _LaunchTurnoButton(
                                 isStart: true,
@@ -142,7 +141,7 @@ class _Body extends StatelessWidget {
                                   controller.finalizarTurno();
                                 })
                             : const SizedBox(),
-                      )
+                      ) */
                     ],
                   ),
                 ),

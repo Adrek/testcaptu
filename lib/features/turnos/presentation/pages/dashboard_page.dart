@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:app_captusiat/core/theme/app_theme.dart';
+import 'package:app_captusiat/core/utils/utils.dart';
 import 'package:app_captusiat/core/widgets/widgets.dart';
 import 'package:app_captusiat/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:app_captusiat/features/location/domain/usecases/get_location_updates_usecase.dart';
@@ -34,7 +35,7 @@ class DashboardPage extends StatelessWidget {
     const inDuration = Duration(milliseconds: 400);
 
     return Scaffold(
-      backgroundColor: Colorize().accentFill,
+      backgroundColor: Colorize().defaultSurface,
       body: _Body(
         controller: controller,
         height: height,
@@ -70,77 +71,143 @@ class _Body extends StatelessWidget {
       children: [
         _Header(width: width, inDuration: inDuration),
         Expanded(
-          child: SingleChildScrollView(
-            child: Container(
-              margin: const EdgeInsets.only(top: 80.0),
-              padding: const EdgeInsets.symmetric(
-                horizontal: Content.padding,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: FadeInLeft(
-                          delay: const Duration(milliseconds: 100),
-                          duration: inDuration,
-                          child: _KpiCard(
-                            title: 'Capturas',
-                            subTitle: 'Realizadas del día',
-                            numberValue: 0,
-                            footer: 'placas vehiculares',
-                            prefixIcon: SvgPicture.asset(
-                              'assets/icons/line_chart.svg',
+          child: Container(
+            // color: Colors.red,
+            margin: const EdgeInsets.only(top: 60.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: Content.padding,
+              vertical: Content.padding,
+            ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: IntrinsicHeight(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: FadeInLeft(
+                            delay: const Duration(milliseconds: 100),
+                            duration: inDuration,
+                            child: _KpiCard(
+                              title: 'Capturas',
+                              subTitle: 'Realizadas del día',
+                              numberValue: 0,
+                              footer: 'placas vehiculares',
+                              prefixIcon: SvgPicture.asset(
+                                'assets/icons/line_chart.svg',
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: Content.padding * .7),
-                      Expanded(
-                        child: FadeInRight(
-                          delay: const Duration(milliseconds: 300),
-                          duration: inDuration,
-                          child: const _KpiCard(
-                            title: 'Plaqueos',
-                            subTitle: 'Totales registrados',
-                            numberValue: 0,
-                            footer: 'actualizado',
+                        const SizedBox(width: Content.padding * .7),
+                        Expanded(
+                          child: FadeInRight(
+                            delay: const Duration(milliseconds: 300),
+                            duration: inDuration,
+                            child: const _KpiCard(
+                              title: 'Plaqueos',
+                              subTitle: 'Totales registrados',
+                              numberValue: 0,
+                              footer: 'actualizado',
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: Content.padding * .70),
+                Obx(
+                  () {
+                    if (controller.validarTurnoError.value != null) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                              child: Text(
+                                  controller.validarTurnoError.value ?? '')),
+                          const SizedBox(width: 10),
+                          RoundedButton(
+                            label: 'Reintentar',
+                            onTap: () => controller.validarTurnoVigente(),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return FadeIn(
+                        delay: const Duration(milliseconds: 800),
+                        child: Obx(
+                          () => FadeIn(
+                            key: ValueKey(
+                                'vKBtn${controller.modoIniciarTurno.value}'),
+                            child: AnimatedToggle(
+                              controller: controller.toggleController,
+                              text: controller.modoIniciarTurno.value
+                                  ? 'Iniciar el viaje'
+                                  : 'Finalizar turno',
+                              arrowsColor: controller.modoIniciarTurno.value
+                                  ? Colors.white
+                                  : Colorize().accentFill,
+                              foregroundColor: controller.modoIniciarTurno.value
+                                  ? Colorize().accentFill
+                                  : Colors.white,
+                              backgroundColor: controller.modoIniciarTurno.value
+                                  ? Colors.white
+                                  : Colorize().accentFill,
+                              textColor: controller.modoIniciarTurno.value
+                                  ? Colorize().accentFill
+                                  : Colors.white,
+                              direction: controller.modoIniciarTurno.value
+                                  ? TextDirection.ltr
+                                  : TextDirection.rtl,
+                              action: (_) async {
+                                controller.toggleController?.loading();
+                                await Future.delayed(
+                                  const Duration(milliseconds: 1500),
+                                );
+                                if (controller.modoIniciarTurno.value) {
+                                  controller.iniciarTurno();
+                                } else {
+                                  controller.finalizarTurno();
+                                }
+                              },
+                            ),
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: Spacing.sm * .3,
-                  ),
-                  Obx(
-                    () => controller.isIniciarButtonVisible.value
-                        ? SwitcherButton(
-                            onTap: () {
-                              controller.iniciarTurno();
-                            },
-                          )
-                        : const SizedBox(),
-                  ),
-                  Obx(
-                    () => controller.isFinalizarButtonVisible.value
-                        ? SwitcherButton(
-                            esUnido: true,
-                            onTap: () {
-                              controller.finalizarTurno();
-                            },
-                          )
-                        : const SizedBox(),
-                  ),
-                  FadeInUp(
-                    delay: const Duration(milliseconds: 400),
-                    duration: inDuration,
-                    child: const _CardConsultaPlacas(),
-                  ),
-                ],
-              ),
+                      );
+                    }
+                  },
+                ),
+
+                /* const SizedBox(
+                  height: Spacing.sm * .3,
+                ),
+                Obx(
+                  () => controller.isIniciarButtonVisible.value
+                      ? SwitcherButton(
+                          onTap: () {
+                            controller.iniciarTurno();
+                          },
+                        )
+                      : const SizedBox(),
+                ),
+                Obx(
+                  () => controller.isFinalizarButtonVisible.value
+                      ? SwitcherButton(
+                          esUnido: true,
+                          onTap: () {
+                            controller.finalizarTurno();
+                          },
+                        )
+                      : const SizedBox(),
+                ), */
+                const SizedBox(height: Content.padding * .70),
+                FadeInUp(
+                  delay: const Duration(milliseconds: 400),
+                  duration: inDuration,
+                  child: const _CardConsultaPlacas(),
+                ),
+              ],
             ),
           ),
         )
@@ -257,9 +324,7 @@ class _KpiCard extends StatelessWidget {
           borderRadius: cardRadius,
           highlightColor: Colors.black.withOpacity(.035),
           splashColor: Colors.black.withOpacity(.045),
-          onTap: () {
-            debugPrint('asd');
-          },
+          onTap: () {},
           child: Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 10.0,
@@ -267,6 +332,7 @@ class _KpiCard extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -302,19 +368,21 @@ class _KpiCard extends StatelessWidget {
                     const SizedBox(width: 5.0),
                   ],
                 ),
-                Row(
-                  children: [
-                    if (prefixIcon != null) Flexible(child: prefixIcon!),
-                    if (prefixIcon != null) const SizedBox(width: 6.0),
-                    Text(
-                      '$numberValue',
-                      style: TextStyle(
-                        color: Colorize().bodyText,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 40.0,
+                Expanded(
+                  child: Row(
+                    children: [
+                      if (prefixIcon != null) Flexible(child: prefixIcon!),
+                      if (prefixIcon != null) const SizedBox(width: 6.0),
+                      Text(
+                        '$numberValue',
+                        style: TextStyle(
+                          color: Colorize().bodyText,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 40.0,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Text(
                   footer,
@@ -418,23 +486,7 @@ class _CardConsultaPlacas extends StatelessWidget {
                               Row(
                                 children: [
                                   Flexible(
-                                    child: FilledButton(
-                                      style: ButtonStyle(
-                                        padding: const WidgetStatePropertyAll(
-                                          EdgeInsets.symmetric(
-                                            vertical: 0.0,
-                                            horizontal: 20.0,
-                                          ),
-                                        ),
-                                        backgroundColor: WidgetStatePropertyAll(
-                                          Colorize().accentFill,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        // Get.toNamed(AppRoutes.PLAQUEOS);
-                                      },
-                                      child: const Text('INGRESAR'),
-                                    ),
+                                    child: RoundedButton(label: 'INGRESAR'),
                                   ),
                                 ],
                               ),
@@ -447,20 +499,24 @@ class _CardConsultaPlacas extends StatelessWidget {
                   Expanded(
                     flex: 3,
                     child: Container(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colorize().primaryFill,
+                          color: const Color(0xFFB9B9B9),
                           boxShadow: [
                             BoxShadow(
-                              color: Colorize().primaryFill.withOpacity(.5),
+                              color: ColorsUtils.darken(const Color(0xFFB9B9B9))
+                                  .withOpacity(.5),
                               offset: const Offset(0, 6),
                               blurRadius: 10.0,
                             )
                           ]),
                       child: Padding(
                           padding: const EdgeInsets.only(top: 5.0),
-                          child: SvgPicture.asset('assets/icons/gps.svg')),
+                          child: SvgPicture.asset(
+                            'assets/icons/gps.svg',
+                            width: 18,
+                          )),
                       // child: Icon(Icons),
                     ),
                   ),
@@ -484,16 +540,31 @@ class _NavigationBar extends StatelessWidget {
     // final width = MediaQuery.of(context).size.width;
 
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: Content.padding),
       decoration: BoxDecoration(
-        color: Colors.red,
+        color: Colorize().primaryFill,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(30),
         ),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _OptionItem(),
-          _OptionItem(),
+          _OptionItem(
+            label: 'Inicio',
+            iconName: 'home',
+          ),
+          /* _OptionItem(
+            label: 'Digitar',
+            iconName: 'search_outlilne',
+          ), */
+          _OptionItem(
+            label: 'Cerrar sesión',
+            iconName: 'settings_outline',
+            onTap: () {
+              controller.logout();
+            },
+          ),
         ],
       ),
     );
@@ -555,15 +626,54 @@ class _NavigationBar extends StatelessWidget {
 }
 
 class _OptionItem extends StatelessWidget {
+  final String label;
+  final String iconName;
+  final VoidCallback? onTap;
+
   const _OptionItem({
-    super.key,
+    required this.label,
+    required this.iconName,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [Text('Inicio')],
+    return Flexible(
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          onTap: onTap,
+          splashColor: ColorsUtils.lighten(Colorize().primaryFill, 0.035),
+          highlightColor: ColorsUtils.lighten(Colorize().primaryFill, 0.05),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox.square(
+                  dimension: Spacing.xl3 - 4,
+                  child: SvgPicture.asset(
+                    'assets/icons/$iconName.svg',
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                      Colors.white.withOpacity(.75),
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: Spacing.md,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white.withOpacity(.75),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

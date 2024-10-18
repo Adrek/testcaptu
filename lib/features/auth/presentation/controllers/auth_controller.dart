@@ -21,10 +21,13 @@ class AuthController extends GetxController {
   UserCredentials? get userCredentials => _userCredentials;
 
   final isLoading = false.obs;
-  final loginError = ''.obs;
+  final loginError = RxnString();
 
   Future<void> login(String username, String password) async {
+    loginError.value = null;
+
     isLoading(true);
+
     final result = await loginUseCase.call(
       LoginParams(username, password),
     );
@@ -58,8 +61,9 @@ class AuthController extends GetxController {
     isLoading(false);
   }
 
-  Future<void> logout() async {
+  Future<void> logout({String? reason}) async {
     isLoading(true);
+    loginError.value = reason;
     final result = await logoutUseCase.call(NoParams());
 
     result.fold(

@@ -1,11 +1,19 @@
+import 'package:action_slider/action_slider.dart';
+import 'package:animate_do/animate_do.dart';
 import 'package:app_captusiat/core/theme/app_theme.dart';
+import 'package:app_captusiat/core/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 
+part 'animated_toggle.dart';
 part 'app_bar_base.dart';
+part 'arrows_animated.dart';
 part 'brand_name.dart';
 part 'brand_slogan.dart';
 part 'error_layer.dart';
 part 'loading_layer.dart';
+part 'prueba_page.dart';
+part 'rounded_button.dart';
 part 'switcher_button.dart';
 part 'version_lateral_bar.dart';

@@ -19,4 +19,7 @@ abstract class AppRoutes {
 
   // ALERTING
   static const ALERTING = '/alerting';
+
+  // MISC
+  static const PRUEBA = '/prueba';
 }

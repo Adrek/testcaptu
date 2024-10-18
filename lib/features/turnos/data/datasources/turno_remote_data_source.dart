@@ -10,7 +10,7 @@ class TurnoRemoteDataSource {
 
   Future<Turno?> getTurnoAbiertoHoy(int userId) async {
     try {
-      final response = await networkService.get('/ListaTurno/1');
+      final response = await networkService.get('/ListaTurno/$userId');
 
       final turnos = List<TurnoApiModel>.from(
           response.data.map((e) => TurnoApiModel.fromJson(e)));
@@ -31,7 +31,7 @@ class TurnoRemoteDataSource {
         '/turno',
         data: {
           "psitipo": 1, // TODO: Para qué es?
-          "pbiuser_id": 1 // TODO: Se debe extraer del token
+          "pbiuser_id": userId
         },
       );
     } catch (e) {

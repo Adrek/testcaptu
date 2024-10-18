@@ -15,8 +15,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _authController = Get.find<AuthController>();
 
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _usernameController = TextEditingController()..text = '295910';
+  final _passwordController = TextEditingController()..text = 'startsql';
 
   Future<void> onLogin() async {
     final username = _usernameController.text;
@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Obx(() => Text(_authController.loginError.value,
+                      Obx(() => Text(_authController.loginError.value ?? '',
                           style: const TextStyle(color: Colors.red))),
                     ],
                   ),

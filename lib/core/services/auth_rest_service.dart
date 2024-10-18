@@ -1,16 +1,14 @@
 import 'package:app_captusiat/core/services/network_service.dart';
-import 'package:app_captusiat/core/utils/utils.dart';
 import 'package:dio/dio.dart';
 
-class ApiRestService extends NetworkService {
+class AuthRestService extends NetworkService {
   @override
   final Dio dio;
 
-  ApiRestService(this.dio) {
-    dio.options.baseUrl = 'http://localhost:8080/backend/api/v1/captudep';
+  AuthRestService(this.dio) {
+    dio.options.baseUrl = 'http://localhost:8080/auth/public/Authentication';
     dio.options.headers = {};
-    dio.interceptors.add(TokenInterceptor());
-    dio.interceptors.add(AnalyzeInterceptor());
+    dio.interceptors.add(LogInterceptor(responseBody: true));
   }
 
   @override

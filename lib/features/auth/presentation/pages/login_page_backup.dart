@@ -46,7 +46,7 @@ class LoginPageBackup extends StatelessWidget {
                         ? const CircularProgressIndicator()
                         : const Text("Login")),
                   ),
-                  Obx(() => Text(authController.loginError.value,
+                  Obx(() => Text(authController.loginError.value ?? '',
                       style: const TextStyle(color: Colors.red))),
                 ],
               ),

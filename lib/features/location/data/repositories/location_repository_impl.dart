@@ -1,5 +1,5 @@
 import 'package:app_captusiat/core/error/failure.dart';
-import 'package:app_captusiat/features/location/data/datasources/posiciones_remote_data_source_supabase.dart';
+import 'package:app_captusiat/features/location/data/datasources/posiciones_remote_data_source.dart';
 import 'package:app_captusiat/features/location/domain/entities/location.dart';
 import 'package:app_captusiat/features/location/domain/repositories/location_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationRepositoryImpl implements LocationRepository {
-  final PosicionesRemoteDataSourceSupabase posicionesRemoteDataSourceSupabase;
+  final PosicionesRemoteDataSource posicionesRemoteDataSourceSupabase;
 
   LocationRepositoryImpl(this.posicionesRemoteDataSourceSupabase);
 
